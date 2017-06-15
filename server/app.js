@@ -80,11 +80,39 @@ app.post('/links',
 app.post('/signup', 
 (req, res, next) => {
   models.Users.create({username: req.body.username, password: req.body.password})
-  .then(() => {
-    //console.log(req.body.username);
-    res.status(201).send();
+  .then((results) => {
+    res.redirect('/');
+  })
+  .error(error => {  // user already exists
+    res.redirect('/signup');
   });
 
+});
+
+
+
+
+
+app.post('/login', 
+(req, res, next) => {
+  models.Users.get({username: req.body.username})
+  .then(result => {
+    
+    res.redirect('/');
+    console.log(result);
+    res.status(201).send();
+    // models.Users.compare({username: req.body.username, password: req.body.password});
+
+  });
+
+  // .then((results) => {
+  //   res.redirect('/');
+  //   // res.status(201).send();
+  // })
+  // .error(error => {  // user already exists
+  //   res.redirect('/signup');
+  // });
+  
 });
 /************************************************************/
 // Handle the code parameter route last - if all other routes fail
