@@ -77,9 +77,15 @@ app.post('/links',
 /************************************************************/
 // Write your authentication routes here
 /************************************************************/
+app.post('/signup', 
+(req, res, next) => {
+  models.Users.create({username: req.body.username, password: req.body.password})
+  .then(() => {
+    //console.log(req.body.username);
+    res.status(201).send();
+  });
 
-
-
+});
 /************************************************************/
 // Handle the code parameter route last - if all other routes fail
 // assume the route is a short code and try and handle it here.
